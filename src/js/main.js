@@ -1,5 +1,8 @@
 import "../css/main.css";
 
+let perder = new Audio('src/audio/perder.wav');
+let treinta = new Audio('src/audio/xd.mp3');
+
 (function(window){
 
 var Game = {
@@ -31,6 +34,8 @@ var Game = {
 		this.shooting = false;
 		this.oneShot = false;
 		this.isGameOver = false;
+		treinta.pause();
+		treinta.currentTime = 0;
      this.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
 		for(var i = 0; i<this.maxEnemies; i++){
 			new Enemy();
@@ -49,6 +54,7 @@ var Game = {
 	},
 
 	clicked: function(){
+		treinta.pause();
 		if(!Game.paused) {
 			Game.pause();
 		} else {
@@ -99,6 +105,10 @@ var Game = {
 		if(e.keyCode === 39 || e.keyCode === 68){
 			Game.player.movingRight = true;
 		}
+		///////////////////////////////////
+		if(Game.score > 400){
+			treinta.play();
+		  }
 	},
 
 	random: function(min, max){
@@ -134,10 +144,12 @@ var Game = {
 		this.paused = false;
   },
 
-
   gameOver: function(){
   	this.isGameOver = true;
   	this.clear();
+	perder.play();
+	treinta.pause();
+	treinta.currentTime = 0;
   	var message = "Game Over";
   	var message2 = "Puntuación: " + Game.score;
   	var message3 = "Pulsa espacio para volver a jugar";
@@ -156,7 +168,6 @@ var Game = {
   	this.ctx.fillText("Puntaje: " + this.score, 8, 20);
   	this.ctx.fillText("Vidas: " + (this.maxLives - this.life), 8, 40);
   },
-  
 	loop: function(){
 		if(!Game.paused){
 			Game.clear();
@@ -337,7 +348,6 @@ Enemy.prototype.die = function(){
   		new Enemy();
 	  }, 2000);
 	}
-  
 };
 
 Enemy.prototype.explode = function(){
