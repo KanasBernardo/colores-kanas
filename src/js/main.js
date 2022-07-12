@@ -1,7 +1,7 @@
 import "../css/main.css";
 
-let perder = new Audio('../audio/perder.wav');
-let treinta = new Audio('../audio/xd.mp3');
+let perder = new Audio('src/audio/perder.wav');
+let treinta = new Audio('src/audio/xd.mp3');
 
 (function(window){
 
